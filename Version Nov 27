@@ -189,47 +189,49 @@ void checkdebounces() {
 }
 
 void macros() { //Macros for special key combinations. Feel free to modify and add.
-  if (presskey[3][4] && presskey[7][1]) {//raise and lower
-    if (functionality != plover) {
-      if (presskey[5][1]) {
-          plovermode();
-          clearmatrixes();
-          delay(500);
-        }
-      if (presskey[5][2]) {
+    if (functionality == plover) { //Raise and lower + right hand home row: Plover, Dvorak, Normal, Gaming.
+      if (presskey[7][5]) {
+        if (presskey[6][2]) {
           dvorakmode();
           clearmatrixes();
           delay(500);
         }
-      if (presskey[5][3]) {
+        if (presskey[6][3]) {
           qwertymode();
           clearmatrixes();
           delay(500);
         }
-      if (presskey[5][4]) {
+        if (presskey[6][4]) {
           gamingmode();
           clearmatrixes();
           delay(500);
         }
       }
-    if (functionality == plover) { //Raise and lower + right hand home row: Plover, Dvorak, Normal, Gaming.
-      if (presskey[6][2]) {
-        dvorakmode();
-        clearmatrixes();
-        delay(500);
-      }
-      if (presskey[6][3]) {
-        qwertymode();
-        clearmatrixes();
-        delay(500);
-      }
-      if (presskey[6][4]) {
-        gamingmode();
-        clearmatrixes();
-        delay(500);
+    }
+    if (presskey[3][4] && presskey[7][1]) {//raise and lower
+      if (functionality != plover) {
+        if (presskey[5][1]) {
+          plovermode();
+          clearmatrixes();
+          delay(500);
+        }
+        if (presskey[5][2]) {
+          dvorakmode();
+          clearmatrixes();
+          delay(500);
+        }
+        if (presskey[5][3]) {
+          qwertymode();
+          clearmatrixes();
+          delay(500);
+        }
+        if (presskey[5][4]) {
+          gamingmode();
+          clearmatrixes();
+          delay(500);
+        }
       }
     }
-  }
 
   if (functionality != plover){
     if (presskey[4][5] && presskey[6][5]) { //shift backspace
@@ -463,6 +465,7 @@ void clearmatrixes() {
   clearmatrix(presskey, false);
   clearmatrix(debouncingkeyrelease, false);
   clearmatrix(releasekey, false);
+  Keyboard.releaseAll(); //Since keys may still be pressed and releasekey is set to false, nothing gives a keyrelease.
 }
 void clearmatrix(boolean matrix[][COLS], boolean value) {
   for (int i = 0; i < ROWS; i++) {
